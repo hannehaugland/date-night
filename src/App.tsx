@@ -1,10 +1,17 @@
 import "./App.css";
+import { ChakraProvider } from "@chakra-ui/react";
+
+import Generator from "./components/Generator";
+import Head from "./components/Head";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">Welcome to date night!</header>
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <Head />
+        <Generator />
+      </div>
+    </ChakraProvider>
   );
 }
 
