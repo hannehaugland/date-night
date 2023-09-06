@@ -1,5 +1,5 @@
 import "./App.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, VStack } from "@chakra-ui/react";
 
 import Generator from "./components/Generator";
 import Head from "./components/Head";
@@ -7,10 +7,10 @@ import Head from "./components/Head";
 function App() {
   return (
     <ChakraProvider>
-      <div className="App">
+      <VStack gap={10}>
         <Head />
         <Generator />
-      </div>
+      </VStack>
     </ChakraProvider>
   );
 }

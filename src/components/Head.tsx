@@ -1,10 +1,16 @@
+import { Button, Text, VStack } from "@chakra-ui/react";
+
 export default function Head() {
   return (
-    <div>
-      <h1>Velkommen til date night!</h1>
-      <p>
-        Dersom du trykker på knappen under vil det genereres en date til deg.
-      </p>
-    </div>
+    <VStack>
+      <Text fontSize="6xl" fontFamily="Georgia">
+        DATE NIGHT!
+      </Text>
+      <Text width={600} align="center">
+        Velkommen til <Text as="i">date night</Text>! Dersom du trykker på
+        knappen under vil en date bli generert for deg i form av en middagsrett
+        og en film å se på.
+      </Text>
+    </VStack>
   );
 }
