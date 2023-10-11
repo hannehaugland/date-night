@@ -1,17 +1,48 @@
 import { Button, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Movie } from "../types/Movie";
+import { Recipie } from "../types/Recipie";
 
 export default function Generator() {
-  let [dinner, setDinner] = useState("Trykk for å generere");
-  let [movie, setMovie] = useState("Trykk for å generere");
-  const dinners = ["Pasta", "Soup", "Taco"];
-  const movies = ["Star Wars", "Hamlet", "Phantom"];
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [recipies, setRecipies] = useState<Recipie[]>([]);
+  const [randomIndexMovies, setRandomIndexMovies] = useState<number>(0);
+  const [randomIndexRecipie, setRandomIndexRecipie] = useState<number>(0);
 
+  // fetching movies from endpoint
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/movies");
+        const movies: Movie[] = await response.json();
+        setMovies(movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
+  // fetching recipies from endpoint
+  useEffect(() => {
+    const fetchRecipies = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/recipies");
+        const recipies: Recipie[] = await response.json();
+        setRecipies(recipies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchRecipies();
+  }, []);
+
+  // Generating a random index to select a combo
   function generateDate(): any {
-    let random1 = Math.floor(Math.random() * dinners.length);
-    let random2 = Math.floor(Math.random() * movies.length);
-    setDinner(dinners[random1]);
-    setMovie(movies[random2]);
+    setRandomIndexRecipie(Math.floor(Math.random() * recipies.length));
+    setRandomIndexMovies(Math.floor(Math.random() * movies.length));
   }
 
   return (
@@ -21,10 +52,10 @@ export default function Generator() {
       </Button>
       <br />
       <Text as="b">Middag: </Text>
-      <Text as="i">{dinner}</Text>
+      <Text as="i">{recipies[randomIndexRecipie]?.name}</Text>
       <br />
       <Text as="b">Film: </Text>
-      <Text as="i">{movie}</Text>
+      <Text as="i">{movies[randomIndexMovies]?.name}</Text>
     </VStack>
   );
 }
