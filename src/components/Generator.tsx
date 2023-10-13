@@ -2,6 +2,7 @@ import { Button, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
 import { Recipie } from "../types/Recipie";
+import { apiUrl } from "../constants";
 
 export default function Generator() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -13,7 +14,7 @@ export default function Generator() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/movies");
+        const response = await fetch(`${apiUrl}/api/movies`);
         const movies: Movie[] = await response.json();
         setMovies(movies);
       } catch (e) {
@@ -28,7 +29,7 @@ export default function Generator() {
   useEffect(() => {
     const fetchRecipies = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/recipies");
+        const response = await fetch(`${apiUrl}/api/recipies`);
         const recipies: Recipie[] = await response.json();
         setRecipies(recipies);
       } catch (e) {

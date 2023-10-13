@@ -48,7 +48,7 @@ app.post("/api/recipies", async (req, res) => {
     const { name, category, ingredients} = req.body;
   
     if (!name || !category || !ingredients) {
-      return res.status(400).send("name, genre and ingredients fields required");
+      return res.status(400).send("name, category and ingredients fields required");
     }
   
     try {
