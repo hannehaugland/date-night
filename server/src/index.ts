@@ -27,6 +27,26 @@ app.get("/api/recipies",async (req, res) => {
     res.json(recipies);
 })
 
+// get random recipie 
+app.get("/api/recipies/:id",async (req, res) => {
+  const recipie = await prisma.recipies.findUnique({
+    where: {
+      r_id: Number(req.params.id)
+    }
+  });
+  res.json(recipie);
+})
+
+// get random movie 
+app.get("/api/movies/:id",async (req, res) => {
+  const movie = await prisma.movie.findUnique({
+    where: {
+      m_id: Number(req.params.id)
+    }
+  });
+  res.json(movie);
+})
+
 app.post("/api/movies", async (req, res) => {
     const { name, genre} = req.body;
   
