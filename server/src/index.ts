@@ -28,20 +28,22 @@ app.get("/api/recipies",async (req, res) => {
 })
 
 // get random recipie 
-app.get("/api/recipies/:id",async (req, res) => {
+app.get("/api/recipies/random",async (req, res) => {
+  const id = Math.floor((Math.random() * await prisma.recipies.count()) + 1);
   const recipie = await prisma.recipies.findUnique({
     where: {
-      r_id: Number(req.params.id)
+      r_id: Number(id)
     }
   });
   res.json(recipie);
 })
 
 // get random movie 
-app.get("/api/movies/:id",async (req, res) => {
+app.get("/api/movies/random",async (req, res) => {
+  const id = Math.floor((Math.random() * await prisma.movie.count()) + 1);
   const movie = await prisma.movie.findUnique({
     where: {
-      m_id: Number(req.params.id)
+      m_id: Number(id)
     }
   });
   res.json(movie);

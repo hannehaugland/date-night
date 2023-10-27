@@ -8,8 +8,7 @@ export default function Generator() {
   const { data: movie, refetch: refetchMovie } = useQuery(
     ["Movie"],
     async () => {
-      const id = Math.floor(Math.random() * 3);
-      const res = await fetch(`${apiUrl}/api/movies/` + id);
+      const res = await fetch(`${apiUrl}/api/movies/random`);
       return await res.json();
     }
   );
@@ -18,8 +17,7 @@ export default function Generator() {
   const { data: recipie, refetch: refetchRecipie } = useQuery(
     ["Recipie"],
     async () => {
-      const id = Math.floor(Math.random() * 2);
-      const res = await fetch(`${apiUrl}/api/recipies/` + id);
+      const res = await fetch(`${apiUrl}/api/recipies/random`);
       return await res.json();
     }
   );
