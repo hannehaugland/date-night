@@ -1,30 +1,56 @@
 import { Button, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useQuery } from "react-query";
+
+import { apiUrl } from "../constants";
 
 export default function Generator() {
-  let [dinner, setDinner] = useState("Trykk for å generere");
-  let [movie, setMovie] = useState("Trykk for å generere");
-  const dinners = ["Pasta", "Soup", "Taco"];
-  const movies = ["Star Wars", "Hamlet", "Phantom"];
+  // fetching random movie
+  const {
+    data: movie,
+    refetch: refetchMovie,
+    isError: isErrorMovie,
+    isLoading: isLoadingMovie,
+  } = useQuery(["Movie"], async () => {
+    const res = await fetch(`${apiUrl}/api/movies/random`);
+    return await res.json();
+  });
 
-  function generateDate(): any {
-    let random1 = Math.floor(Math.random() * dinners.length);
-    let random2 = Math.floor(Math.random() * movies.length);
-    setDinner(dinners[random1]);
-    setMovie(movies[random2]);
+  // fetching random recipie
+  const {
+    data: recipie,
+    refetch: refetchRecipie,
+    isError: isErrorRecipie,
+    isLoading: isLoadingRecipie,
+  } = useQuery(["Recipie"], async () => {
+    const res = await fetch(`${apiUrl}/api/recipies/random`);
+    return await res.json();
+  });
+
+  if (isLoadingMovie || isLoadingRecipie) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (isErrorMovie || isErrorRecipie) {
+    return <Text>Woops</Text>;
   }
 
   return (
     <VStack gap={2}>
-      <Button size="lg" colorScheme="pink" onClick={generateDate}>
+      <Button
+        size="lg"
+        colorScheme="pink"
+        onClick={() => {
+          refetchMovie();
+          refetchRecipie();
+        }}>
         Generer date night
       </Button>
       <br />
       <Text as="b">Middag: </Text>
-      <Text as="i">{dinner}</Text>
+      <Text as="i">{recipie.name}</Text>
       <br />
       <Text as="b">Film: </Text>
-      <Text as="i">{movie}</Text>
+      <Text as="i">{movie.name}</Text>
     </VStack>
   );
 }
